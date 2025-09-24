@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
 } from "./ui/card";
+import { Badge } from "./ui/badge";
 import {
   User as UserIcon,
   Mail,
