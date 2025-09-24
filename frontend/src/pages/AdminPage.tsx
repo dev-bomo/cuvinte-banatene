@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { adminApi, authApi } from "../services/api";
-import { Word, WordCreateRequest } from "../../../shared/types";
+import { Word, WordCreateRequest } from "../types";
 import { WordForm } from "../components/WordForm";
 import { WordList } from "../components/WordList";
 import { Button } from "../components/ui/button";

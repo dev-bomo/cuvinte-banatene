@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Word, WordCreateRequest } from "../../../shared/types";
+import { Word, WordCreateRequest } from "../types";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {

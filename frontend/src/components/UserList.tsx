@@ -1,4 +1,4 @@
-import { User } from "../../../shared/types";
+import { User } from "../types";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import {

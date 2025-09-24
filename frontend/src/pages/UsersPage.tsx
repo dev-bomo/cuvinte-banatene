@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { usersApi } from "../services/api";
-import { User, RegisterRequest } from "../../../shared/types";
+import { User, RegisterRequest } from "../types";
 import { UserForm } from "../components/UserForm";
 import { UserList } from "../components/UserList";
 import { Button } from "../components/ui/button";

@@ -5,7 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { User, LoginRequest, LoginResponse } from "../../../shared/types";
+import { User, LoginRequest, LoginResponse } from "../types";
 import { authApi } from "../services/api";
 
 interface AuthContextType {

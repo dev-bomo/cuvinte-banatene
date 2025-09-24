@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { User, RegisterRequest } from "../../../shared/types";
+import { User, RegisterRequest } from "../types";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {
