@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { wordsApi } from "../services/api";
-import { Word } from "../../shared/types";
+import { Word } from "../types";
 import SmileButton from "../components/SmileButton";
 import { Button } from "../components/ui/button";
 import {
@@ -171,7 +171,7 @@ export function AlphabeticalPage() {
 
                 <CardContent className="p-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {groupedWords[letter].map((word, index) => (
+                    {groupedWords[letter].map((word: Word, index: number) => (
                       <Card
                         key={word.id}
                         className="group hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-emerald-300 hover:-translate-y-1"

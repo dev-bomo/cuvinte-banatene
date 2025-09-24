@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { wordsApi } from "../services/api";
-import { WordSearchResult } from "../../shared/types";
+import { WordSearchResult } from "../types";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import {

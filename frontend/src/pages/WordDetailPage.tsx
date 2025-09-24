@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { wordsApi } from "../services/api";
-import { Word } from "../../shared/types";
+import { Word } from "../types";
 import { Button } from "../components/ui/button";
 import {
   Card,
@@ -129,7 +129,7 @@ export function WordDetailPage() {
                 wordId={word.id}
                 initialSmileCount={word.smileCount}
                 onSmileCountUpdate={(newCount) => {
-                  setWord((prev) =>
+                  setWord((prev: Word | null) =>
                     prev ? { ...prev, smileCount: newCount } : null
                   );
                 }}
@@ -178,7 +178,7 @@ export function WordDetailPage() {
                   Exemple de utilizare
                 </h2>
                 <div className="space-y-3">
-                  {word.examples.map((example, index) => (
+                  {word.examples.map((example: string, index: number) => (
                     <div
                       key={index}
                       className="bg-blue-50 border border-blue-200 rounded-lg p-4"

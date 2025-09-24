@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { wordsApi } from "../services/api";
-import { Word } from "../../shared/types";
+import { Word } from "../types";
 import SmileButton from "../components/SmileButton";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
-import { Search, BookOpen, ArrowRight, Heart, Sparkles } from "lucide-react";
+import { Search, BookOpen, ArrowRight, Sparkles } from "lucide-react";
 
 export function HomePage() {
   const [words, setWords] = useState<Word[]>([]);

@@ -1,12 +1,9 @@
-import { Word } from "../../../shared/types";
+import { Word } from "../types";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "./ui/card";
 import {
   Table,

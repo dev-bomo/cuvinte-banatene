@@ -9,10 +9,8 @@ import {
   RegisterRequest,
   WordCreateRequest,
   WordUpdateRequest,
-  EmailVerificationRequest,
-  ResendVerificationRequest,
   SmileResponse,
-} from "../../shared/types";
+} from "../types";
 
 const API_BASE_URL = "/api";
 

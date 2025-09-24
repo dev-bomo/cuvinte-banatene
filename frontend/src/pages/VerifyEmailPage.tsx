@@ -25,7 +25,7 @@ const VerifyEmailPage: React.FC = () => {
 
   const verifyEmail = async (verificationToken: string) => {
     try {
-      const response = await authApi.verifyEmail(verificationToken);
+      await authApi.verifyEmail(verificationToken);
       setStatus("success");
       setMessage(
         "Email-ul a fost verificat cu succes! Acum poți adăuga cuvinte în dicționar."
