@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import path from "path";
 import { wordsRouter } from "./routes/words";
 import { searchRouter } from "./routes/search";
 import { authRouter } from "./routes/auth";
@@ -14,8 +15,13 @@ import { sampleWords } from "./data/words";
 const app = express();
 const PORT = process.env.PORT || 5002;
 
+// Get directory paths (CommonJS)
+const frontendDistPath = path.join(__dirname, "../../frontend/dist");
+
 // Middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false, // Allow inline scripts for Vite
+}));
 app.use(cors());
 app.use(express.json());
 
@@ -49,14 +55,28 @@ app.use(
   }
 );
 
-// 404 handler
-app.use("*", (req, res) => {
-  res.status(404).json({
-    message: "Route not found",
-    status: 404,
-    timestamp: new Date().toISOString(),
+// Serve static files from frontend/dist (in production)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(frontendDistPath));
+  
+  // SPA fallback: serve index.html for all non-API routes
+  app.get("*", (req, res, next) => {
+    // Don't serve index.html for API routes
+    if (req.path.startsWith("/api")) {
+      return next();
+    }
+    res.sendFile(path.join(frontendDistPath, "index.html"));
   });
-});
+} else {
+  // 404 handler for API routes in development
+  app.use("/api/*", (req, res) => {
+    res.status(404).json({
+      message: "Route not found",
+      status: 404,
+      timestamp: new Date().toISOString(),
+    });
+  });
+}
 
 // Initialize database with sample data
 async function initializeDatabase() {

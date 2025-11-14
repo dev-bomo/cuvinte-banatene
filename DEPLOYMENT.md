@@ -1,43 +1,41 @@
 # Deployment Guide
 
-## Current Status
+## Recommended: Deploy Both Frontend and Backend Together
 
-✅ **Frontend**: Deployed on Vercel at `https://cuvinte-banatene.vercel.app`  
-❌ **Backend**: Not yet deployed (needs separate hosting)
+**Best Practice**: Deploy both frontend and backend on the same platform. This simplifies configuration, reduces CORS issues, and makes everything easier to manage.
 
-## Important: Backend Deployment Required
+### Why deploy together?
 
-**Vercel only hosts static frontend files.** Your backend (Express.js API) needs to be deployed separately on a platform that supports Node.js servers.
+✅ **Simpler configuration** - No need to configure CORS or API URLs  
+✅ **Same domain** - Frontend and API on the same URL  
+✅ **Easier management** - One deployment, one platform  
+✅ **Better performance** - No cross-origin requests  
+✅ **Cost effective** - One service instead of two
 
-### Why the words are empty in production:
-
-1. The frontend is deployed on Vercel ✅
-2. The backend is **not deployed** ❌
-3. API calls from the frontend fail because there's no backend server
-4. The database (SQLite) only exists when the backend server runs
-
-## Backend Deployment Options
+## Deployment Options
 
 ### Option 1: Railway (Recommended - Easy & Free tier available)
+
+Railway can host both your frontend and backend together:
 
 1. Go to [railway.app](https://railway.app)
 2. Sign up with GitHub
 3. Click "New Project" → "Deploy from GitHub repo"
 4. Select your repository
 5. Configure the service:
-   - **Root Directory**: `backend`
-   - **Build Command**: `npm install && npm run build`
-   - **Start Command**: `npm start`
+   - **Root Directory**: `.` (project root)
+   - **Build Command**: `npm run install:all && npm run build`
+   - **Start Command**: `cd backend && npm start`
 6. Set environment variables:
    - `JWT_SECRET` - Generate a strong secret key
    - `PORT` - Railway will set this automatically
    - `NODE_ENV=production`
-   - `FRONTEND_URL=https://cuvinte-banatene.vercel.app`
+   - `FRONTEND_URL` - Your Railway URL (set after deployment)
    - Email configuration (if needed)
 7. Railway will provide a URL like `https://your-app.railway.app`
-8. Update Vercel environment variable:
-   - Go to Vercel project settings → Environment Variables
-   - Add: `VITE_API_URL=https://your-app.railway.app/api`
+8. **That's it!** Your frontend and backend are now on the same domain
+   - Frontend: `https://your-app.railway.app`
+   - API: `https://your-app.railway.app/api`
 
 ### Option 2: Render
 
@@ -45,32 +43,33 @@
 2. Sign up and create a new "Web Service"
 3. Connect your GitHub repository
 4. Configure:
-   - **Root Directory**: `backend`
-   - **Build Command**: `npm install && npm run build`
-   - **Start Command**: `npm start`
+   - **Root Directory**: `.` (project root)
+   - **Build Command**: `npm run install:all && npm run build`
+   - **Start Command**: `cd backend && npm start`
 5. Set environment variables (same as Railway)
-6. Render will provide a URL
-7. Update `VITE_API_URL` in Vercel
+6. Render will provide a URL - both frontend and API will be on the same domain
 
 ### Option 3: Heroku
 
 1. Go to [heroku.com](https://heroku.com)
 2. Create a new app
 3. Connect GitHub repository
-4. Deploy from the `backend` directory
-5. Set environment variables
-6. Update `VITE_API_URL` in Vercel
+4. Configure:
+   - **Root Directory**: `.` (project root)
+   - **Build Command**: `npm run install:all && npm run build`
+   - **Start Command**: `cd backend && npm start`
+5. Set environment variables (same as Railway)
 
-## Frontend Configuration (Vercel)
+## Alternative: Separate Deployments (Not Recommended)
 
-After deploying the backend, you need to configure the frontend to point to it:
+If you prefer to keep frontend on Vercel and backend elsewhere:
 
-1. Go to your Vercel project dashboard
-2. Navigate to **Settings** → **Environment Variables**
-3. Add a new variable:
-   - **Name**: `VITE_API_URL`
-   - **Value**: `https://your-backend-url.com/api` (your backend URL + `/api`)
-4. Redeploy the frontend (or push a new commit)
+### Backend on Railway/Render/Heroku
+
+Follow the same steps as above, but:
+- Set **Root Directory**: `backend` (instead of `.`)
+- After deployment, get your backend URL
+- Configure Vercel environment variable: `VITE_API_URL=https://your-backend-url.com/api`
 
 ## Database Initialization
 
@@ -100,11 +99,13 @@ EMAIL_PASS=your-app-password
 EMAIL_FROM=your-email@gmail.com
 ```
 
-### Frontend (Vercel):
+### Frontend (Only if using separate deployments):
 
 ```env
 VITE_API_URL=https://your-backend-url.com/api
 ```
+
+**Note**: If deploying both on the same platform, you don't need this - the API uses relative paths (`/api`) which work automatically.
 
 ## Testing the Deployment
 
@@ -140,10 +141,17 @@ VITE_API_URL=https://your-backend-url.com/api
 
 ## Next Steps
 
-1. ✅ Deploy backend to Railway/Render/Heroku
-2. ✅ Set `VITE_API_URL` in Vercel environment variables
-3. ✅ Redeploy frontend (or wait for auto-deploy)
-4. ✅ Test the full application
-5. ✅ Change default admin passwords
-6. ✅ Configure email service (if using email verification)
+1. ✅ Deploy both frontend and backend to Railway/Render/Heroku (recommended)
+   - OR deploy backend separately and configure Vercel
+2. ✅ Test the full application at your deployment URL
+3. ✅ Change default admin passwords
+4. ✅ Configure email service (if using email verification)
+
+## How It Works
+
+When deployed together:
+- **Backend** serves the API at `/api/*` routes
+- **Backend** serves static frontend files from `frontend/dist` for all other routes
+- **SPA routing** - All non-API routes serve `index.html` (React Router handles routing)
+- **Same domain** - No CORS issues, simpler configuration
 
