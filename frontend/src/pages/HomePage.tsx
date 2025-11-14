@@ -197,7 +197,10 @@ export function HomePage() {
                       size="sm"
                       className="rounded-lg"
                     >
-                      <Link to={`/word/${word.id}`} className="flex items-center">
+                      <Link
+                        to={`/word/${word.id}`}
+                        className="flex items-center"
+                      >
                         Citește mai mult
                         <ArrowRight className="ml-1 h-3 w-3" />
                       </Link>
