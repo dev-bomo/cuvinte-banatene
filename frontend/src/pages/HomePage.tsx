@@ -134,66 +134,80 @@ export function HomePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {words.map((word, index) => (
-            <Card
-              key={word.id}
-              className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/90 backdrop-blur-sm hover:-translate-y-2"
-            >
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge variant="secondary" className="text-xs">
-                    #{index + 1}
-                  </Badge>
-                  {word.category && (
-                    <Badge variant="outline" className="text-xs">
-                      {word.category}
+        {words.length === 0 ? (
+          <Card className="max-w-2xl mx-auto">
+            <CardContent className="pt-6 text-center py-12">
+              <BookOpen className="h-16 w-16 mx-auto mb-4 text-gray-400" />
+              <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                Nu există cuvinte disponibile
+              </h3>
+              <p className="text-gray-500">
+                Dicționarul este momentan gol. Te rugăm să revii mai târziu.
+              </p>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {words.map((word, index) => (
+              <Card
+                key={word.id}
+                className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg bg-white/90 backdrop-blur-sm hover:-translate-y-2"
+              >
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <Badge variant="secondary" className="text-xs">
+                      #{index + 1}
                     </Badge>
-                  )}
-                </div>
-                <CardTitle className="text-2xl font-bold text-gray-800 group-hover:text-emerald-600 transition-colors">
-                  <Link to={`/word/${word.id}`}>{word.word}</Link>
-                </CardTitle>
-              </CardHeader>
-
-              <CardContent className="space-y-4">
-                <CardDescription className="text-gray-600 leading-relaxed">
-                  {word.shortDescription}
-                </CardDescription>
-
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                  <div className="flex items-center space-x-2">
-                    <SmileButton
-                      wordId={word.id}
-                      initialSmileCount={word.smileCount}
-                      onSmileCountUpdate={(newCount) => {
-                        setWords((prevWords) =>
-                          prevWords.map((w) =>
-                            w.id === word.id
-                              ? { ...w, smileCount: newCount }
-                              : w
-                          )
-                        );
-                      }}
-                    />
+                    {word.category && (
+                      <Badge variant="outline" className="text-xs">
+                        {word.category}
+                      </Badge>
+                    )}
                   </div>
+                  <CardTitle className="text-2xl font-bold text-gray-800 group-hover:text-emerald-600 transition-colors">
+                    <Link to={`/word/${word.id}`}>{word.word}</Link>
+                  </CardTitle>
+                </CardHeader>
 
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="sm"
-                    className="rounded-lg"
-                  >
-                    <Link to={`/word/${word.id}`} className="flex items-center">
-                      Citește mai mult
-                      <ArrowRight className="ml-1 h-3 w-3" />
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                <CardContent className="space-y-4">
+                  <CardDescription className="text-gray-600 leading-relaxed">
+                    {word.shortDescription}
+                  </CardDescription>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div className="flex items-center space-x-2">
+                      <SmileButton
+                        wordId={word.id}
+                        initialSmileCount={word.smileCount}
+                        onSmileCountUpdate={(newCount) => {
+                          setWords((prevWords) =>
+                            prevWords.map((w) =>
+                              w.id === word.id
+                                ? { ...w, smileCount: newCount }
+                                : w
+                            )
+                          );
+                        }}
+                      />
+                    </div>
+
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="rounded-lg"
+                    >
+                      <Link to={`/word/${word.id}`} className="flex items-center">
+                        Citește mai mult
+                        <ArrowRight className="ml-1 h-3 w-3" />
+                      </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Call to Action Section */}

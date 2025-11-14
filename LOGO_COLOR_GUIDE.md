@@ -104,3 +104,4 @@ After making changes:
 
 The color scheme will automatically update across the entire website when you change the CSS variables!
 
+

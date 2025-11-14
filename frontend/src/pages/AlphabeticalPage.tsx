@@ -96,6 +96,24 @@ export function AlphabeticalPage() {
     );
   }
 
+  if (words.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-green-50 flex items-center justify-center">
+        <Card className="max-w-2xl mx-auto">
+          <CardContent className="pt-6 text-center py-12">
+            <BookOpen className="h-16 w-16 mx-auto mb-4 text-gray-400" />
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+              Nu există cuvinte disponibile
+            </h3>
+            <p className="text-gray-500">
+              Dicționarul este momentan gol. Te rugăm să revii mai târziu.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-green-50">
       <div className="container mx-auto px-4 py-8">
